@@ -3,30 +3,39 @@ package math.function;
 import java.awt.*;
 
 /**
- * Function representation
+ * Interpolation function
  */
-public interface FunctionInterface {
+public class InterpolationFunction1 implements FunctionInterface {
 
     /**
      * Gets the function's title
      *
      * @return
      */
-    String getTitle();
+    @Override
+    public String getTitle() {
+        return "Duotoji funkcija";
+    }
 
     /**
      * Gets the right-most x of the function
      *
      * @return
      */
-    double getLeftMostX();
+    @Override
+    public double getLeftMostX() {
+        return 2;
+    }
 
     /**
      * Gets the left-most x of the function
      *
      * @return
      */
-    double getRightMostX();
+    @Override
+    public double getRightMostX() {
+        return 10;
+    }
 
     /**
      * Gets function's value at the specified point
@@ -34,63 +43,66 @@ public interface FunctionInterface {
      * @param x x to calculate function value
      * @return
      */
-    double getValue(double x);
+    @Override
+    public double getValue(double x) {
+        return Math.log(x) / (Math.sin(2 * x) + 1.5) + x / 7;
+    }
 
     /**
      * Gets the function's point count
      *
      * @return
      */
-    int getPointCount();
+    @Override
+    public int getPointCount() {
+        return 200;
+    }
 
     /**
      * Gets the function's color
      *
      * @return
      */
-    Color getColor();
+    @Override
+    public Color getColor() {
+        return Color.GREEN;
+    }
 
     /**
      * Does any actions the function requires
      */
-    void initialize();
+    @Override
+    public void initialize() {
+
+    }
 
     /**
      * Checks if the function points' shapes are visible
      *
      * @return
      */
-    boolean areShapesVisible();
+    @Override
+    public boolean areShapesVisible() {
+        return false;
+    }
 
     /**
      * Checks if the function's lines are visible
      *
      * @return
      */
-    boolean areLinesVisible();
+    @Override
+    public boolean areLinesVisible() {
+        return true;
+    }
 
     /**
      * Checks if only the function's bounds need to be rendered
      *
      * @return
      */
-    boolean onlyRenderBounds();
-
-    /**
-     * Checks if distances between x values are even
-     *
-     * @return
-     */
-    default boolean notEvenXIntervals() {
+    @Override
+    public boolean onlyRenderBounds() {
         return false;
-    }
-
-    /**
-     * Gets the specified x value (only works if x distances are not even)
-     *
-     * @return
-     */
-    default double getXValue() {
-        return 0;
     }
 }

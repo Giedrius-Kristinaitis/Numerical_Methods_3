@@ -26,7 +26,7 @@ import java.util.List;
 public abstract class GraphAction implements ActionListener, GraphDataProvider {
 
     // displayed functions
-    private List<FunctionInterface> functions = new ArrayList<FunctionInterface>();
+    protected List<FunctionInterface> functions = new ArrayList<FunctionInterface>();
 
     /**
      * Default class constructor
@@ -141,7 +141,7 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
         double step = (function.getRightMostX() - function.getLeftMostX()) / (double) function.getPointCount();
 
         for (int i = 0; i < function.getPointCount(); i++) {
-            double x = function.getLeftMostX() + step * i;
+            double x = function.notEvenXIntervals() ? function.getXValue() : function.getLeftMostX() + step * i;
             series.add(x, function.getValue(x));
         }
     }
@@ -153,7 +153,7 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
      */
     @Override
     public String getWindowTitle() {
-        return "L1";
+        return "L3";
     }
 
     /**
