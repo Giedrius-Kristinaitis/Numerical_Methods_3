@@ -3,8 +3,10 @@ package main;
 import action.GraphAction;
 import action.NewtonInterpolationAction1;
 import action.NewtonInterpolationAction2;
+import action.NewtonTemperatureInterpolationAction1;
 import math.function.FunctionInterface;
 import math.function.InterpolationFunction1;
+import math.function.TemperatureFunction1;
 
 import javax.swing.*;
 
@@ -25,10 +27,12 @@ public class Main {
 
     // function data
     private FunctionInterface interpolationFunction1;
+    private FunctionInterface temperatureFunction;
 
     // actions
     private GraphAction newtonInterpolationAction1;
     private GraphAction newtonInterpolationAction2;
+    private GraphAction newtonTemperatureAction1;
 
     /**
      * Default class constructor
@@ -43,9 +47,11 @@ public class Main {
      */
     private void createData() {
         interpolationFunction1 = new InterpolationFunction1();
+        temperatureFunction = new TemperatureFunction1();
 
         newtonInterpolationAction1 = new NewtonInterpolationAction1(interpolationFunction1);
         newtonInterpolationAction2 = new NewtonInterpolationAction2(interpolationFunction1);
+        newtonTemperatureAction1 = new NewtonTemperatureInterpolationAction1(temperatureFunction);
     }
 
     /**
@@ -70,11 +76,14 @@ public class Main {
     private void initializeUI(JFrame frame) {
         JButton first = new JButton("Interpoliavimas daugianariu (Niutono baze) taskai pasiskirste tolygiai");
         JButton second = new JButton("Interpoliavimas daugianariu (Niutono baze) taskai apskaiciuoti naudojant Ciobysevo abscises");
+        JButton third = new JButton("Interpoliavimas daugianariu (Niutono baze) temperaturos");
 
         first.addActionListener(newtonInterpolationAction1);
         second.addActionListener(newtonInterpolationAction2);
+        third.addActionListener(newtonTemperatureAction1);
 
         frame.add(first).setBounds(0, 0, 720, 50);
         frame.add(second).setBounds(0, 50, 720, 50);
+        frame.add(third).setBounds(0, 100, 720, 50);
     }
 }

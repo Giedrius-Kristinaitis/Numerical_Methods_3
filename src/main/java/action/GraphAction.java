@@ -142,6 +142,11 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
 
         for (int i = 0; i < function.getPointCount(); i++) {
             double x = function.notEvenXIntervals() ? function.getXValue() : function.getLeftMostX() + step * i;
+
+            if (!function.notEvenXIntervals() && x > function.getRightMostX()) {
+                continue;
+            }
+
             series.add(x, function.getValue(x));
         }
     }

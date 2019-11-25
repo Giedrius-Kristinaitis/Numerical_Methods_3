@@ -1,11 +1,24 @@
 package math.interpolation;
 
 import math.Point;
+import math.function.FunctionInterface;
 
 /**
  * Provides interpolation points by even intervals
  */
 public class EvenIntervalPointProvider extends AbstractPointProvider {
+
+    // function to get points from
+    protected FunctionInterface pointCountFunction;
+
+    /**
+     * Sets the function to get points from
+     *
+     * @param function function
+     */
+    public void setPointCountFunction(FunctionInterface function) {
+        this.pointCountFunction = function;
+    }
 
     /**
      * Gets the total point count
@@ -14,7 +27,7 @@ public class EvenIntervalPointProvider extends AbstractPointProvider {
      */
     @Override
     public int getPointCount() {
-        return POINT_COUNT;
+        return pointCountFunction == null ? POINT_COUNT : pointCountFunction.getPointCount();
     }
 
     /**
@@ -25,7 +38,7 @@ public class EvenIntervalPointProvider extends AbstractPointProvider {
      */
     @Override
     public Point getPoint(int index) {
-        double pieceLength = (x2 - x1) / POINT_COUNT;
+        double pieceLength = (x2 - x1) / (getPointCount() - 1);
 
         double x = x1 + pieceLength * index;
         double y = function.getValue(x);
