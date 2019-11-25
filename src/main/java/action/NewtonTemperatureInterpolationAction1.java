@@ -1,6 +1,5 @@
 package action;
 
-import math.function.DifferenceFunction;
 import math.function.FunctionInterface;
 import math.function.InterpolationPointFunction;
 import math.function.PolynomialFunctionBuilderInterface;

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Creates functions
  */
-public class PolynomialFunctionBuilder implements PolynomialFunctionBuilderInterface {
+public class NewtonPolynomialFunctionBuilder implements PolynomialFunctionBuilderInterface {
 
     // buildable function
     protected Function function;
@@ -15,7 +15,7 @@ public class PolynomialFunctionBuilder implements PolynomialFunctionBuilderInter
     /**
      * Class constructor
      */
-    public PolynomialFunctionBuilder() {
+    public NewtonPolynomialFunctionBuilder() {
         function = new Function();
     }
 

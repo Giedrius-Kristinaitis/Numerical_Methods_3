@@ -1,7 +1,7 @@
 package math.interpolation;
 
 import math.Point;
-import math.function.PolynomialFunctionBuilder;
+import math.function.NewtonPolynomialFunctionBuilder;
 import math.function.PolynomialFunctionBuilderInterface;
 
 /**
@@ -26,7 +26,7 @@ public class NewtonBaseInterpolator implements InterpolatorInterface {
          */
 
         // create some builders
-        functionBuilder = new PolynomialFunctionBuilder();
+        functionBuilder = new NewtonPolynomialFunctionBuilder();
         StringBuilder polynomialExpression = new StringBuilder();
 
         // perform interpolation
