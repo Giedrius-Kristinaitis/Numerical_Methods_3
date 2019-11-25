@@ -42,7 +42,7 @@ public class NewtonTemperatureInterpolationAction1 extends GraphAction {
      */
     @Override
     public void actionPerformed(ActionEvent event) {
-        System.out.println("*************** INTERPOLIAVIMAS DAUGIANARIU (Niutono bazine funkcija) TEMPERATUROS ***************");
+        System.out.println("*************** INTERPOLIAVIMAS DAUGIANARIU (Niutono bazine funkcija) TEMPERATUROS KIPRAS 2004 ***************");
 
         InterpolatorInterface interpolator = interpolate(equalIntervalPointProvider);
 
@@ -84,6 +84,6 @@ public class NewtonTemperatureInterpolationAction1 extends GraphAction {
      */
     @Override
     public String getTitle() {
-        return "Interpoliavimas daugianariu (Niutono bazine funkcija) temperaturos";
+        return "Interpoliavimas daugianariu (Niutono bazine funkcija) temperaturos Kipras 2004";
     }
 }
