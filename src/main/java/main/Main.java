@@ -1,9 +1,6 @@
 package main;
 
-import action.GraphAction;
-import action.NewtonInterpolationAction1;
-import action.NewtonInterpolationAction2;
-import action.NewtonTemperatureInterpolationAction1;
+import action.*;
 import math.function.FunctionInterface;
 import math.function.InterpolationFunction1;
 import math.function.TemperatureFunction1;
@@ -33,6 +30,7 @@ public class Main {
     private GraphAction newtonInterpolationAction1;
     private GraphAction newtonInterpolationAction2;
     private GraphAction newtonTemperatureAction1;
+    private GraphAction hermitTemperatureAction1;
 
     /**
      * Default class constructor
@@ -52,6 +50,7 @@ public class Main {
         newtonInterpolationAction1 = new NewtonInterpolationAction1(interpolationFunction1);
         newtonInterpolationAction2 = new NewtonInterpolationAction2(interpolationFunction1);
         newtonTemperatureAction1 = new NewtonTemperatureInterpolationAction1(temperatureFunction);
+        hermitTemperatureAction1 = new HermitTemperatureInterpolationAction1(temperatureFunction);
     }
 
     /**
@@ -77,13 +76,16 @@ public class Main {
         JButton first = new JButton("Interpoliavimas daugianariu (Niutono baze) taskai pasiskirste tolygiai");
         JButton second = new JButton("Interpoliavimas daugianariu (Niutono baze) taskai apskaiciuoti naudojant Ciobysevo abscises");
         JButton third = new JButton("Interpoliavimas daugianariu (Niutono baze) temperaturos");
+        JButton fourth = new JButton("Interpoliavimas Ermito splainu temperaturos");
 
         first.addActionListener(newtonInterpolationAction1);
         second.addActionListener(newtonInterpolationAction2);
         third.addActionListener(newtonTemperatureAction1);
+        fourth.addActionListener(hermitTemperatureAction1);
 
         frame.add(first).setBounds(0, 0, 720, 50);
         frame.add(second).setBounds(0, 50, 720, 50);
         frame.add(third).setBounds(0, 100, 720, 50);
+        frame.add(fourth).setBounds(0, 150, 720, 50);
     }
 }
