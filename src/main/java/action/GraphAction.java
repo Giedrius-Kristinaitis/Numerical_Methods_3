@@ -1,6 +1,7 @@
 package action;
 
 import graph.GraphDataProvider;
+import math.Point;
 import math.function.FunctionInterface;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -21,20 +22,48 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Shows a window with a graph
+ * Shows a window with a graph (data can be provided by functions or a point list)
  */
 public abstract class GraphAction implements ActionListener, GraphDataProvider {
 
     // displayed functions
     protected List<FunctionInterface> functions = new ArrayList<FunctionInterface>();
 
+    // displayed points
+    protected List<Point> points;
+
+    // title used when populating data from points
+    protected String customPointTitle;
+
+    // color used when populating data from points
+    protected Color customPointColor;
+
+    // shape visibility flag when populating from point list
+    protected boolean areShapesVisible;
+
+    // line visibility flag when populating from point list
+    protected boolean areLinesVisible;
+
     /**
-     * Default class constructor
+     * Class constructor
      *
      * @param functions displayed functions
      */
     public GraphAction(FunctionInterface... functions) {
         this.functions.addAll(Arrays.asList(functions));
+    }
+
+    /**
+     * Class constructor
+     *
+     * @param points points to display
+     */
+    public GraphAction(List<Point> points, String customPointTitle, Color customPointColor, boolean areLinesVisible, boolean areShapesVisible) {
+        this.points = points;
+        this.customPointTitle = customPointTitle;
+        this.customPointColor = customPointColor;
+        this.areLinesVisible = areLinesVisible;
+        this.areShapesVisible = areShapesVisible;
     }
 
     /**
@@ -79,10 +108,19 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 
         // set line colors
+        int startIndex = 0;
+
+        if (points != null) {
+            renderer.setSeriesPaint(0, customPointColor);
+            renderer.setSeriesShapesVisible(0, areShapesVisible);
+            renderer.setSeriesLinesVisible(0, areLinesVisible);
+            startIndex = 1;
+        }
+
         for (int i = 0; i < functions.size(); i++) {
-            renderer.setSeriesPaint(i, functions.get(i).getColor());
-            renderer.setSeriesShapesVisible(i, functions.get(i).areShapesVisible());
-            renderer.setSeriesLinesVisible(i, functions.get(i).areLinesVisible());
+            renderer.setSeriesPaint(startIndex + i, functions.get(i).getColor());
+            renderer.setSeriesShapesVisible(startIndex + i, functions.get(i).areShapesVisible());
+            renderer.setSeriesLinesVisible(startIndex + i, functions.get(i).areLinesVisible());
         }
 
         // apply renderer
@@ -118,6 +156,12 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
      * @param collection collection to fill
      */
     private void fillSeriesCollection(XYSeriesCollection collection) {
+        if (points != null) {
+            XYSeries series = new XYSeries(customPointTitle);
+            fillSeries(series, points);
+            collection.addSeries(series);
+        }
+
         for (FunctionInterface function : functions) {
             XYSeries series = new XYSeries(function.getTitle());
             fillSeries(series, function);
@@ -126,7 +170,7 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
     }
 
     /**
-     * Fills xy series with point data
+     * Fills xy series with point data from a function
      *
      * @param series   series to fill
      * @param function function
@@ -148,6 +192,18 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
             }
 
             series.add(x, function.getValue(x));
+        }
+    }
+
+    /**
+     * Fills xy series with point data from a point list
+     *
+     * @param series series to fill
+     * @param points points
+     */
+    private void fillSeries(XYSeries series, List<Point> points) {
+        for (Point point : points) {
+            series.add(point.x, point.y);
         }
     }
 
