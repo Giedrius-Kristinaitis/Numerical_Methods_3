@@ -25,7 +25,14 @@ public class HermitPolynomial implements FunctionInterface {
      * @param points
      */
     public void setPoints(Point[] points) {
-        this.points = points;
+        this.points = new Point[points.length + 2];
+
+        this.points[0] = new Point(0, 9);
+        this.points[points.length + 1] = new Point(13, 9);
+
+        for (int i = 0; i < points.length; i++) {
+            this.points[i + 1] = points[i];
+        }
     }
 
     /**
