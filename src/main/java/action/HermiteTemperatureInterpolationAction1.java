@@ -2,17 +2,17 @@ package action;
 
 import math.Point;
 import math.function.FunctionInterface;
-import math.function.HermitPolynomial;
+import math.function.HermitePolynomial;
 import math.function.InterpolationPointFunction;
 import math.interpolation.EvenIntervalPointProvider;
 
 import java.awt.event.ActionEvent;
 
 /**
- * Hermit's interpolation for temperature data
+ * Hermite interpolation for temperature data
  */
 @SuppressWarnings("Duplicates")
-public class HermitTemperatureInterpolationAction1 extends GraphAction {
+public class HermiteTemperatureInterpolationAction1 extends GraphAction {
 
     protected FunctionInterface interpolationFunction;
     protected EvenIntervalPointProvider equalIntervalPointProvider;
@@ -22,7 +22,7 @@ public class HermitTemperatureInterpolationAction1 extends GraphAction {
      *
      * @param function
      */
-    public HermitTemperatureInterpolationAction1(FunctionInterface function) {
+    public HermiteTemperatureInterpolationAction1(FunctionInterface function) {
         this.interpolationFunction = function;
 
         equalIntervalPointProvider = new EvenIntervalPointProvider();
@@ -49,11 +49,19 @@ public class HermitTemperatureInterpolationAction1 extends GraphAction {
      * Performs interpolation
      */
     protected void interpolate() {
-        Point[] points = collectPoints();
+        Point[] points1 = collectPoints();
 
-        HermitPolynomial polynomial = new HermitPolynomial();
+        HermitePolynomial polynomial = new HermitePolynomial();
 
-        polynomial.setFunction(interpolationFunction);
+        Point[] points = new Point[points1.length + 2];
+
+        points[0] = new Point(0, 9);
+        points[points1.length + 1] = new Point(13, 9);
+
+        for (int i = 0; i < points1.length; i++) {
+            points[i + 1] = points1[i];
+        }
+
         polynomial.setPoints(points);
 
         functions.add(polynomial);

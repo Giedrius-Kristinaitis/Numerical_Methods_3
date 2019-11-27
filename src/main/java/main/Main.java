@@ -50,7 +50,7 @@ public class Main {
         newtonInterpolationAction1 = new NewtonInterpolationAction1(interpolationFunction1);
         newtonInterpolationAction2 = new NewtonInterpolationAction2(interpolationFunction1);
         newtonTemperatureAction1 = new NewtonTemperatureInterpolationAction1(temperatureFunction);
-        hermitTemperatureAction1 = new HermitTemperatureInterpolationAction1(temperatureFunction);
+        hermitTemperatureAction1 = new HermiteTemperatureInterpolationAction1(temperatureFunction);
     }
 
     /**

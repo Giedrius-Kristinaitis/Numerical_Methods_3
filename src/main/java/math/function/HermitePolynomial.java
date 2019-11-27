@@ -4,20 +4,10 @@ import math.Point;
 
 import java.awt.*;
 
-public class HermitPolynomial implements FunctionInterface {
+public class HermitePolynomial implements FunctionInterface {
 
     // data
-    protected FunctionInterface function;
     protected Point[] points;
-
-    /**
-     * Sets interpolation function
-     *
-     * @param function
-     */
-    public void setFunction(FunctionInterface function) {
-        this.function = function;
-    }
 
     /**
      * Sets point data
@@ -25,14 +15,7 @@ public class HermitPolynomial implements FunctionInterface {
      * @param points
      */
     public void setPoints(Point[] points) {
-        this.points = new Point[points.length + 2];
-
-        this.points[0] = new Point(0, 9);
-        this.points[points.length + 1] = new Point(13, 9);
-
-        for (int i = 0; i < points.length; i++) {
-            this.points[i + 1] = points[i];
-        }
+        this.points = points;
     }
 
     /**
