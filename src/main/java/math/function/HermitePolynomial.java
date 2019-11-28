@@ -99,7 +99,13 @@ public class HermitePolynomial implements FunctionInterface {
                 continue;
             }
 
-            value *= (x - points[j].x) / (points[i].x - points[j].x);
+            double divisionResult = (x - points[j].x) / (points[i].x - points[j].x);
+
+            if (!Double.isFinite(divisionResult)) {
+                continue;
+            }
+
+            value *= divisionResult;
         }
 
         return value;
@@ -119,7 +125,13 @@ public class HermitePolynomial implements FunctionInterface {
                 continue;
             }
 
-            value += 1 / (points[i].x - points[j].x);
+            double divisionResult = 1 / (points[i].x - points[j].x);
+
+            if (!Double.isFinite(divisionResult)) {
+                continue;
+            }
+
+            value += divisionResult;
         }
 
         return value;

@@ -31,6 +31,7 @@ public class Main {
     private GraphAction newtonInterpolationAction2;
     private GraphAction newtonTemperatureAction1;
     private GraphAction hermitTemperatureAction1;
+    private GraphAction hermitCountryBorderAction1;
 
     /**
      * Default class constructor
@@ -51,6 +52,7 @@ public class Main {
         newtonInterpolationAction2 = new NewtonInterpolationAction2(interpolationFunction1);
         newtonTemperatureAction1 = new NewtonTemperatureInterpolationAction1(temperatureFunction);
         hermitTemperatureAction1 = new HermiteTemperatureInterpolationAction1(temperatureFunction);
+        hermitCountryBorderAction1 = new HermiteCountryBorderInterpolationAction1();
     }
 
     /**
@@ -77,15 +79,18 @@ public class Main {
         JButton second = new JButton("Interpoliavimas daugianariu (Niutono baze) taskai apskaiciuoti naudojant Ciobysevo abscises");
         JButton third = new JButton("Interpoliavimas daugianariu (Niutono baze) temperaturos");
         JButton fourth = new JButton("Interpoliavimas Ermito splainu temperaturos");
+        JButton fifth = new JButton("Parametrinis interpoliavimas Ermito splainu Kipro konturas");
 
         first.addActionListener(newtonInterpolationAction1);
         second.addActionListener(newtonInterpolationAction2);
         third.addActionListener(newtonTemperatureAction1);
         fourth.addActionListener(hermitTemperatureAction1);
+        fifth.addActionListener(hermitCountryBorderAction1);
 
         frame.add(first).setBounds(0, 0, 720, 50);
         frame.add(second).setBounds(0, 50, 720, 50);
         frame.add(third).setBounds(0, 100, 720, 50);
         frame.add(fourth).setBounds(0, 150, 720, 50);
+        frame.add(fifth).setBounds(0, 200, 720, 50);
     }
 }

@@ -44,6 +44,10 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
     // line visibility flag when populating from point list
     protected boolean areLinesVisible;
 
+    // y bounds
+    protected double minY;
+    protected double maxY;
+
     /**
      * Class constructor
      *
@@ -54,16 +58,22 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
     }
 
     /**
-     * Class constructor
+     * Sets point data
      *
-     * @param points points to display
+     * @param points
+     * @param customPointTitle
+     * @param customPointColor
+     * @param areLinesVisible
+     * @param areShapesVisible
      */
-    public GraphAction(List<Point> points, String customPointTitle, Color customPointColor, boolean areLinesVisible, boolean areShapesVisible) {
+    public void setPointData(List<Point> points, String customPointTitle, Color customPointColor, boolean areLinesVisible, boolean areShapesVisible, double minY, double maxY) {
         this.points = points;
         this.customPointTitle = customPointTitle;
         this.customPointColor = customPointColor;
         this.areLinesVisible = areLinesVisible;
         this.areShapesVisible = areShapesVisible;
+        this.minY = minY;
+        this.maxY = maxY;
     }
 
     /**
@@ -127,6 +137,10 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
         chart.getXYPlot().setRenderer(renderer);
         chart.getXYPlot().setDomainZeroBaselineVisible(true);
         chart.getXYPlot().setRangeZeroBaselineVisible(true);
+
+        if (points != null) {
+            chart.getXYPlot().getRangeAxis().setRange(minY - 0.1, maxY + 0.1);
+        }
 
         // apply chart container
         frame.setContentPane(panel);
