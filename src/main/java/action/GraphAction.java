@@ -48,6 +48,10 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
     protected double minY;
     protected double maxY;
 
+    // x bounds
+    protected double minX;
+    protected double maxX;
+
     /**
      * Class constructor
      *
@@ -66,7 +70,7 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
      * @param areLinesVisible
      * @param areShapesVisible
      */
-    public void setPointData(List<Point> points, String customPointTitle, Color customPointColor, boolean areLinesVisible, boolean areShapesVisible, double minY, double maxY) {
+    public void setPointData(List<Point> points, String customPointTitle, Color customPointColor, boolean areLinesVisible, boolean areShapesVisible, double minY, double maxY, double minX, double maxX) {
         this.points = points;
         this.customPointTitle = customPointTitle;
         this.customPointColor = customPointColor;
@@ -74,6 +78,8 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
         this.areShapesVisible = areShapesVisible;
         this.minY = minY;
         this.maxY = maxY;
+        this.minX = minX;
+        this.maxX = maxX;
     }
 
     /**
@@ -112,7 +118,9 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
 
         // create chart container
         ChartPanel panel = new ChartPanel(chart);
-        panel.setPreferredSize(new Dimension(512, 512));
+        panel.setPreferredSize(new Dimension(1024, 768));
+        panel.setDomainZoomable(false);
+        panel.setRangeZoomable(false);
 
         // create renderer
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
@@ -140,6 +148,7 @@ public abstract class GraphAction implements ActionListener, GraphDataProvider {
 
         if (points != null) {
             chart.getXYPlot().getRangeAxis().setRange(minY - 0.1, maxY + 0.1);
+            chart.getXYPlot().getDomainAxis().setRange(minX - 0.1, maxX + 0.1);
         }
 
         // apply chart container

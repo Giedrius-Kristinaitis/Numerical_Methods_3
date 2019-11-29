@@ -38,6 +38,8 @@ public class NewtonInterpolationAction2 extends GraphAction {
      */
     @Override
     public void actionPerformed(ActionEvent event) {
+        functions.clear();
+
         System.out.println("*************** INTERPOLIAVIMAS DAUGIANARIU (Niutono bazine funkcija) TASKAI APSKAICIUOTI NAUDOJANT CIOBYSEVO ABSCISES ***************");
 
         InterpolatorInterface interpolator = interpolate(abscissaPointProvider);

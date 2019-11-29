@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Draws a country border using Hermite's spline interpolation
  */
-public class HermiteCountryBorderInterpolationAction1 extends GraphAction {
+public class HermiteCountryBorderAction extends GraphAction {
 
     // x coordinate data
     protected double[] x = {
@@ -23,6 +23,18 @@ public class HermiteCountryBorderInterpolationAction1 extends GraphAction {
     protected double[] y = {
             34.976, 34.976, 34.979, 34.980, 34.980, 34.984, 34.986, 34.989, 34.990, 34.990, 34.989, 34.985, 34.985, 34.985, 34.982, 34.978, 34.978, 34.977, 34.976, 34.976, 35.001, 35.003, 35.005, 35.010, 35.014, 35.015, 35.014, 35.004, 35.003, 35.001, 34.988, 34.973, 34.966, 34.945, 34.932, 34.916, 34.898, 34.880, 34.861, 34.852, 34.849, 34.845, 34.827, 34.822, 34.818, 34.818, 34.815, 34.808, 34.796, 34.785, 34.781, 34.774, 34.763, 34.758, 34.773, 34.745, 34.731, 34.718, 34.712, 34.707, 34.701, 34.698, 34.705, 34.698, 34.695, 34.687, 34.651, 34.634, 34.634, 34.632, 34.625, 34.629, 34.643, 34.652, 34.646, 34.646, 34.673, 34.677, 34.667, 34.658, 34.662, 34.667, 34.66, 34.667, 34.679, 34.688, 34.701, 34.699, 34.699, 34.699, 34.7, 34.701, 34.697, 34.691, 34.688, 34.686, 34.671, 34.673, 34.676, 34.669, 34.653, 34.65, 34.645, 34.652, 34.666, 34.693, 34.699, 34.704, 34.707, 34.713, 34.722, 34.748, 34.753, 34.782, 34.787, 34.796, 34.849, 34.857, 34.869, 34.876, 34.886, 34.898, 34.911, 34.924, 34.95, 34.961, 34.983, 35.001, 35.032, 35.048, 35.073, 35.091, 35.097, 35.086, 35.059, 35.048, 35.041, 35.043, 35.059, 35.083, 35.109, 35.14, 35.157, 35.166, 35.171, 35.176, 35.178, 35.177, 35.173, 35.172, 35.171, 35.173, 35.161, 35.154, 35.152, 35.154, 35.161, 35.174, 35.187, 35.184, 35.157, 35.144, 35.134, 35.127, 35.12, 35.11, 35.103, 35.095, 35.08, 35.071, 35.063, 35.059, 35.059, 35.065, 35.072, 35.077, 35.088, 35.092, 35.088, 35.081, 35.072, 35.072, 35.079, 35.095, 35.109, 35.116, 35.128, 35.136, 35.138, 35.135, 35.131, 35.131, 35.136, 35.14, 35.149, 35.163, 35.163, 35.158, 35.154, 35.153, 35.149, 35.137, 35.126, 35.118, 35.114, 35.116, 35.121, 35.129, 35.137, 35.155, 35.157, 35.156, 35.158, 35.16, 35.157, 35.145, 35.13, 35.124, 35.114, 35.101, 35.095, 35.078, 35.061, 35.042, 35.019, 35.001, 34.988, 34.978, 34.978, 34.982, 34.997, 35.026, 35.031, 35.037, 35.044, 35.037, 35.013, 35, 34.995, 35.001, 35.014, 35.02, 35.018, 35.012, 35.014, 35.017, 35.014, 35.01, 35, 34.999, 34.997, 34.989, 34.988, 35.061, 35.057, 35.053, 35.051, 35.051, 35.057, 35.057, 35.052, 35.047, 35.049, 35.052, 35.057, 35.047, 35.033, 35.006, 34.988, 34.972, 34.965, 34.964, 34.967, 34.972, 34.983, 34.988, 34.982, 34.97, 34.965, 34.958, 34.963, 34.96, 34.964, 34.973, 34.975, 34.992, 34.993, 35.001, 35.023, 35.03, 35.039, 35.05, 35.056, 35.061, 35.057, 35.051, 35.053, 35.06, 35.068, 35.073, 35.061
     };
+
+    // how many points are used for interpolation
+    protected int interpolationPointCount;
+
+    /**
+     * Class constructor
+     *
+     * @param interpolationPointCount
+     */
+    public HermiteCountryBorderAction(int interpolationPointCount) {
+        this.interpolationPointCount = interpolationPointCount;
+    }
 
     /**
      * Invoked when an action occurs.
@@ -35,20 +47,16 @@ public class HermiteCountryBorderInterpolationAction1 extends GraphAction {
 
         interpolate(points);
 
-        double minY = Double.MAX_VALUE;
-        double maxY = Double.MIN_VALUE;
-
-        for (Point point : points) {
-            if (point.y < minY) {
-                minY = point.y;
-            }
-
-            if (point.y > maxY) {
-                maxY = point.y;
-            }
-        }
-
-        setPointData(points, "Kipro konturas", Color.RED, false, true, minY, maxY);
+        setPointData(
+                points,
+                "Kipro konturas",
+                Color.RED,
+                false,
+                true,
+                34.7,
+                35.1,
+                32.3,
+                34.1);
 
         super.actionPerformed(event);
     }
@@ -71,12 +79,11 @@ public class HermiteCountryBorderInterpolationAction1 extends GraphAction {
         HermitePolynomial polyY = new HermitePolynomial();
         polyY.setPoints(ty);
 
-        for (int i = 0; i < params.length; i++) {
-            /*for (int j = 0; j < 10; j++) {
-                double t = params[i] + (j / 10D);
+        for (int i = 1; i < 100; i++) {
+            for (int j = 0; j < 100; j++) {
+                double t = i + (j / 100D);
                 points.add(new Point(polyX.getValue(t), polyY.getValue(t)));
-            }*/
-            points.add(new Point(polyX.getValue(params[i]), polyY.getValue(params[i])));
+            }
         }
     }
 
@@ -142,7 +149,9 @@ public class HermiteCountryBorderInterpolationAction1 extends GraphAction {
     protected Point[] extractPointData() {
         List<Point> points = new ArrayList<Point>();
 
-        for (int i = 0; i < x.length; i++) {
+        int step = x.length / interpolationPointCount;
+
+        for (int i = 0; i < x.length; i += step) {
             if (i >= y.length) {
                 continue;
             }

@@ -41,6 +41,8 @@ public class NewtonTemperatureInterpolationAction1 extends GraphAction {
      */
     @Override
     public void actionPerformed(ActionEvent event) {
+        functions.clear();
+
         System.out.println("*************** INTERPOLIAVIMAS DAUGIANARIU (Niutono bazine funkcija) TEMPERATUROS KIPRAS 2004 ***************");
 
         InterpolatorInterface interpolator = interpolate(equalIntervalPointProvider);

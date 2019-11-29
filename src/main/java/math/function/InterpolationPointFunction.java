@@ -85,6 +85,10 @@ public class InterpolationPointFunction implements FunctionInterface {
      */
     @Override
     public double getXValue() {
+        if (pointIndex == pointProvider.getPointCount()) {
+            pointIndex = 0;
+        }
+
         return pointProvider.getPoint(pointIndex).x;
     }
 

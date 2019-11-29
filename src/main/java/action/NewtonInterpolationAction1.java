@@ -38,6 +38,8 @@ public class NewtonInterpolationAction1 extends GraphAction {
      */
     @Override
     public void actionPerformed(ActionEvent event) {
+        functions.clear();
+
         System.out.println("*************** INTERPOLIAVIMAS DAUGIANARIU (Niutono bazine funkcija) TASKAI PASISKIRSTE TOLYGIAI ***************");
 
         InterpolatorInterface interpolator = interpolate(equalIntervalPointProvider);

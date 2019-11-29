@@ -38,6 +38,8 @@ public class HermiteTemperatureInterpolationAction1 extends GraphAction {
      */
     @Override
     public void actionPerformed(ActionEvent event) {
+        functions.clear();
+
         interpolate();
 
         functions.add(new InterpolationPointFunction(equalIntervalPointProvider));

@@ -56,85 +56,79 @@ public class HermitePolynomial implements FunctionInterface {
      */
     @Override
     public double getValue(double x) {
-        double value = 0;
+        int index = 0;
 
-        for (int j = 0; j < points.length; j++) {
-            value += getU(j, x) * points[j].y + getV(j, x) * getPointDerivativeValue(j);
+        for (int i = 0; i < points.length - 1; i++) {
+            if (points[i].x <= x && points[i + 1].x >= x) {
+                index = i + 1;
+                break;
+            } else if (i == points.length - 2) {
+                index = points.length - 1;
+            }
         }
 
-        return value;
+        if (index == 0 || index == points.length - 1) {
+            return points[index].y;
+        }
+
+        return (getU(index - 1, index, x) * points[index - 1].y + getV(index - 1, index, x) * getPointDerivativeValue(index - 1))
+                + (getU(index, index - 1, x) * points[index].y + getV(index, index - 1, x) * getPointDerivativeValue(index));
     }
 
     /**
      * Gets U value
      *
-     * @param i
      * @return
      */
-    protected double getU(int i, double x) {
-        return (1 - 2 * getLDerivative(i) * (x - points[i].x)) * Math.pow(getL(i, x), 2);
+    protected double getU(int start, int end, double x) {
+        return (1 - 2 * getLDerivative(start, end) * (x - points[start].x)) * Math.pow(getL(start, end, x), 2);
     }
 
     /**
      * Gets V value
      *
-     * @param i
      * @return
      */
-    protected double getV(int i, double x) {
-        return (x - points[i].x) * Math.pow(getL(i, x), 2);
+    protected double getV(int start, int end, double x) {
+        return (x - points[start].x) * Math.pow(getL(start, end, x), 2);
     }
 
     /**
      * Gets L
      *
-     * @param i
      * @return
      */
-    protected double getL(int i, double x) {
-        double value = 1;
-
-        for (int j = 0; j < points.length; j++) {
-            if (i == j) {
-                continue;
-            }
-
-            double divisionResult = (x - points[j].x) / (points[i].x - points[j].x);
-
-            if (!Double.isFinite(divisionResult)) {
-                continue;
-            }
-
-            value *= divisionResult;
+    protected double getL(int start, int end, double x) {
+        if (start == 0 || start == points.length - 1 || end == 0 || end == points.length - 1) {
+            return 1;
         }
 
-        return value;
+        double divisionResult = (x - points[end].x) / (points[start].x - points[end].x);
+
+        if (!Double.isFinite(divisionResult)) {
+            return 1;
+        }
+
+        return divisionResult;
     }
 
     /**
      * Gets L'
      *
-     * @param i
      * @return
      */
-    protected double getLDerivative(int i) {
-        double value = 0;
-
-        for (int j = 0; j < points.length; j++) {
-            if (i == j) {
-                continue;
-            }
-
-            double divisionResult = 1 / (points[i].x - points[j].x);
-
-            if (!Double.isFinite(divisionResult)) {
-                continue;
-            }
-
-            value += divisionResult;
+    protected double getLDerivative(int start, int end) {
+        if (start == 0 || start == points.length - 1 || end == 0 || end == points.length - 1) {
+            return 1;
         }
 
-        return value;
+        double divisionResult = 1 / (points[start].x - points[end].x);
+
+        if (!Double.isFinite(divisionResult)) {
+            return 1;
+        }
+
+        return divisionResult;
     }
 
     /**
