@@ -4,6 +4,9 @@ import math.Point;
 
 import java.awt.*;
 
+/**
+ * Performs interpolation using Hermite polynomial
+ */
 public class HermitePolynomial implements FunctionInterface {
 
     // data
